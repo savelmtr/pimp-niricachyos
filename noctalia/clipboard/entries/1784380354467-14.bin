@@ -1,0 +1,1 @@
+{spawn-sh "noctalia msg session lock-and-suspend";}

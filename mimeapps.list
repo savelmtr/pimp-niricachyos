@@ -1,0 +1,49 @@
+[Default Applications]
+# Папки — открывать в Yazi
+inode/directory=yazi.desktop
+
+# Документы и изображения
+application/pdf=zathura.desktop
+application/epub+zip=zathura.desktop
+image/vnd.djvu=zathura.desktop
+image/djvu=zathura.desktop
+application/fb2=zathura.desktop
+
+# Изображения
+image/png=imv.desktop
+image/jpeg=imv.desktop
+image/gif=imv.desktop
+image/svg+xml=imv.desktop
+image/webp=imv.desktop
+image/tiff=imv.desktop
+image/bmp=imv.desktop
+image/x-icon=imv.desktop
+
+# Документы Microsoft Office
+application/msword=libreoffice-writer.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+application/vnd.ms-excel=libreoffice-calc.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-calc.desktop
+application/vnd.ms-powerpoint=libreoffice-impress.desktop
+application/vnd.openxmlformats-officedocument.presentationml.presentation=libreoffice-impress.desktop
+application/vnd.oasis.opendocument.text=libreoffice-writer.desktop
+application/vnd.oasis.opendocument.spreadsheet=libreoffice-calc.desktop
+application/vnd.oasis.opendocument.presentation=libreoffice-impress.desktop
+
+# Архивы (для справки, открывать в стандартном архиваторе)
+application/zip=xarchiver.desktop
+application/x-tar=xarchiver.desktop
+application/x-bzip2=xarchiver.desktop
+application/x-gzip=org.gnome.FileRoller.desktop
+application/x-xz=xarchiver.desktop
+application/x-7z-compressed=xarchiver.desktop
+application/x-rar-compressed=org.gnome.FileRoller.desktop
+x-scheme-handler/ss=Outline.desktop
+x-scheme-handler/ssconf=Outline.desktop
+application/x-rar=xarchiver.desktop
+application/gzip=xarchiver.desktop
+application/vnd.rar=xarchiver.desktop
+application/x-zip-compressed=xarchiver.desktop
+
+[Added Associations]
+font/ttf=org.kde.kfontview.desktop;

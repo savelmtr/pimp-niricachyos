@@ -1,0 +1,22 @@
+[[plugin.deps]]
+use = "uhs-robert/recycle-bin"
+rev = "fa68711"
+hash = "8714306b5cac6359edbacbf545fbd691"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "bb758e2"
+hash = "15e5b67a241172cbb86b8fbf9e63692"
+
+[[plugin.deps]]
+use = "wylie102/duckdb"
+rev = "3f8c863"
+hash = "87b9233a74325e95011670ed20bbd0d4"
+
+[[plugin.deps]]
+use = "boydaihungst/gvfs"
+rev = "c5a0bb9"
+hash = "480fde69fef0bcaeb2c21a726f94412c"
+
+[flavor]
+deps = []

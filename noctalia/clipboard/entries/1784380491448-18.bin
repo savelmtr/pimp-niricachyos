@@ -1,0 +1,1 @@
+    lid-close { spawn "notify-send" "The laptop lid is closed!"; }

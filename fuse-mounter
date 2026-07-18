@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+# ~/.local/bin/fuse-mounter
+
+ARCHIVE="$1"
+MOUNT_POINT="/tmp/yazi_mount_$$"
+MOUNTED=0
+
+# Функция очистки при выходе
+cleanup() {
+  echo ""
+  echo "Cleaning up..."
+  if [[ $MOUNTED -eq 1 ]]; then
+    fusermount -u "$MOUNT_POINT" 2>/dev/null
+  fi
+  rmdir "$MOUNT_POINT" 2>/dev/null
+  echo "Unmounted: $MOUNT_POINT"
+  exit 0
+}
+
+# Перехватываем Ctrl+C и другие сигналы
+trap cleanup SIGINT SIGTERM EXIT
+
+if [[ -z "$ARCHIVE" ]]; then
+  echo "Usage: fuse-mounter <archive>"
+  exit 1
+fi
+
+if [[ ! -f "$ARCHIVE" ]]; then
+  echo "Error: Archive '$ARCHIVE' not found"
+  exit 1
+fi
+
+# Определяем размер архива (в байтах)
+SIZE=$(stat -c %s "$ARCHIVE" 2>/dev/null || stat -f %z "$ARCHIVE" 2>/dev/null)
+
+mkdir -p "$MOUNT_POINT"
+
+# Для очень больших архивов используем ratarmount (если установлен)
+if [[ $SIZE -gt 10737418240 ]] && command -v ratarmount &>/dev/null; then # > 10 ГБ
+  echo "Very large archive detected ($(numfmt --to=iec $SIZE 2>/dev/null || echo $SIZE)), using ratarmount"
+  echo "Press Ctrl+C to cancel mounting"
+  ratarmount "$ARCHIVE" "$MOUNT_POINT" --recursive 2>/dev/null
+  if [[ $? -eq 0 ]]; then
+    MOUNTED=1
+  fi
+elif command -v fuse-archive &>/dev/null; then
+  # Для больших архивов используем nocache и отключаем кеширование
+  if [[ $SIZE -gt 1073741824 ]]; then
+    echo "Large archive detected ($(numfmt --to=iec $SIZE 2>/dev/null || echo $SIZE)), using nocache"
+    OPTS="-o ro,nocache,entry_timeout=0,attr_timeout=0"
+  else
+    OPTS="-o ro"
+  fi
+  echo "Mounting archive... (Press Ctrl+C to cancel)"
+  fuse-archive "$ARCHIVE" "$MOUNT_POINT" $OPTS 2>/dev/null
+  if [[ $? -eq 0 ]]; then
+    MOUNTED=1
+  fi
+else
+  echo "Error: No mounting tool available (fuse-archive or ratarmount)"
+  rmdir "$MOUNT_POINT" 2>/dev/null
+  exit 1
+fi
+
+if [[ $MOUNTED -eq 0 ]]; then
+  echo "Error: Failed to mount archive"
+  cleanup
+  exit 1
+fi
+
+echo "Successfully mounted: $ARCHIVE -> $MOUNT_POINT"
+echo "Opening Yazi... (Press Ctrl+C to exit and unmount)"
+
+# Запускаем Yazi в фоне, чтобы можно было перехватить Ctrl+C
+yazi "$MOUNT_POINT"
+
+# Если Yazi завершился нормально, размонтируем
+cleanup
