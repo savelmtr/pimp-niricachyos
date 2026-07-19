@@ -9,18 +9,14 @@ prepend_preloaders = [
   { url = "*.xlsx", run = "duckdb", multi = false },
 
   # Do not preload files in mounted locations:
-  # Environment variable won't work here.
-  # Using absolute path instead.
   { url = "/run/user/1000/gvfs/**/*", run = "noop" },
-
-  # For mounted hard disk/drive
   { url = "/run/media/USER_NAME/**/*", run = "noop" },
 ]
 
 prepend_previewers = [
-{ url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
-{mime = "application/sqlite3", run  = 'piper -- sqlite3 "$1" ".schema --indent"'},
-{ url = "*.csv", run = "duckdb" },  
+  { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+  { mime = "application/sqlite3", run  = 'piper -- sqlite3 "$1" ".schema --indent"'},
+  { url = "*.csv", run = "duckdb" },  
   { url = "*.tsv", run = "duckdb" },  
   { url = "*.parquet", run = "duckdb" },  
   { url = "*.txt", run = "duckdb" },  
@@ -31,10 +27,7 @@ prepend_previewers = [
   { url = "*/", run = "folder" },
 
   # Do not previewing files in mounted locations.
-  # Using absolute path.
   { url = "/run/user/1000/gvfs/**/*", run = "noop" },
-
-  # For mounted hard disk/drive.
   { url = "/run/media/USER_NAME/**/*", run = "noop" },
 ]
 
