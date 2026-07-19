@@ -14,6 +14,7 @@ mkdir -p ~/.config ~/.local/bin ~/.config/systemd/user ~/.config/fish
 
 cp -fr niri ~/.config/
 cp -fr yazi ~/.config/
+cp -fr nvim ~/.config/
 cp -fr noctalia ~/.local/state/
 cp -f mimeapps.list ~/.config/
 cp -f config.fish ~/.config/fish/
