@@ -1,7 +1,7 @@
 #!/bin/bash
 # Самый минимальный вариант
 
-sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli imv kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq
+sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli imv kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq glow
 
 yay -Syu --noconfirm nirimod-git trueconf fuse-archive noctalia
 

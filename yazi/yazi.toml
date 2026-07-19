@@ -4,10 +4,10 @@ tab_size = 2
 prepend_preloaders = [
 { url = "*.csv", run = "duckdb", multi = false },  
   { url = "*.tsv", run = "duckdb", multi = false },  
-# { url = "*.json", run = "duckdb", multi = false },  
   { url = "*.parquet", run = "duckdb", multi = false },
   { url = "*.txt", run = "duckdb", multi = false },  
   { url = "*.xlsx", run = "duckdb", multi = false },
+
   # Do not preload files in mounted locations:
   # Environment variable won't work here.
   # Using absolute path instead.
@@ -18,9 +18,10 @@ prepend_preloaders = [
 ]
 
 prepend_previewers = [
+{ url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
+{mime = "application/sqlite3", run  = 'piper -- sqlite3 "$1" ".schema --indent"'},
 { url = "*.csv", run = "duckdb" },  
   { url = "*.tsv", run = "duckdb" },  
-  # { url = "*.json", run = "duckdb" },  
   { url = "*.parquet", run = "duckdb" },  
   { url = "*.txt", run = "duckdb" },  
   { url = "*.xlsx", run = "duckdb" },  
@@ -30,9 +31,6 @@ prepend_previewers = [
   { url = "*/", run = "folder" },
 
   # Do not previewing files in mounted locations.
-  # Uncomment the line below to allow previewing text files.
-  # { mime = "{text/*,application/x-subrip}", run = "code" },
-
   # Using absolute path.
   { url = "/run/user/1000/gvfs/**/*", run = "noop" },
 
