@@ -15,15 +15,15 @@ prepend_keymap = [
   {on  = "M", run = "plugin mount"},
 
   # GVFS
-    { on = [ "V", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
-    { on = [ "V", "R" ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
-    { on = [ "V", "u" ], run = "plugin gvfs -- select-then-unmount ", desc = "Select device then unmount" },
+    { on = [ "W", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
+    { on = [ "W", "R" ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
+    { on = [ "W", "u" ], run = "plugin gvfs -- select-then-unmount ", desc = "Select device then unmount" },
     # Add Scheme/Mount URI:
-    { on = [ "V", "a" ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
+    { on = [ "W", "a" ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
     # Edit a Scheme/Mount URI
-    { on = [ "V", "e" ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
+    { on = [ "W", "e" ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
     # Remove a Scheme/Mount URI
-    { on = [ "V", "r" ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
+    { on = [ "W", "r" ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
 
     # Jump
     { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device --automount", desc = "Automount then select device to jump to its mount point" },
