@@ -1,2 +1,0 @@
-          lid-close {spawn-sh "noctalia msg session lock-and-suspend";}
-          lid-open { spawn "notify-send" "The laptop lid is open!"; }

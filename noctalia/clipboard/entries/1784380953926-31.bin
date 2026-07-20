@@ -1,1 +1,0 @@
-    lid-close { spawn "notify-send" "Lid was closed!"; }

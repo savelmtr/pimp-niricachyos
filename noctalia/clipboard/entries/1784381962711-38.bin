@@ -1,2 +1,0 @@
-cp suspend-lock.service ~/.config/systemd/user/
-cp suspend-lock-listener.sh ~/.local/bin/

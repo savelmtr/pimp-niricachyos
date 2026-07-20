@@ -1,4 +1,0 @@
-
-systemctl --user daemon-reload
-systemctl --user enable suspend-lock.service
-systemctl --user start suspend-lock.service

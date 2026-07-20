@@ -1,1 +1,0 @@
-          lid-open { spawn "notify-send" "The laptop lid is open!"; }
