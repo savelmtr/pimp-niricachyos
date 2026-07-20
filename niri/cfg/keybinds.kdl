@@ -23,7 +23,7 @@ Mod+Shift+Q hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh
     Mod+E hotkey-overlay-title="File Manager: Yazi" { spawn-sh "kitty yazi"; }
 
     // ─── Media Controls ───
-XF86PowerOff {spawn-sh "noctalia msg session lock-and-suspend";}
+XF86PowerOff {spawn-sh "noctalia msg panel-toggle session";}
 
 // Громкость
 XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "noctalia msg volume-up"; }
