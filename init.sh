@@ -15,10 +15,10 @@ mkdir -p ~/.config ~/.local/bin ~/.config/systemd/user ~/.config/fish
 cp -fr niri ~/.config/
 cp -fr yazi ~/.config/
 cp -fr nvim ~/.config/
+cp -f kitty.conf ~/.config/kitty/
 cp -fr noctalia ~/.config/
 cp -f mimeapps.list ~/.config/
 cp -f config.fish ~/.config/fish/
-cp -f kitty.conf ~/.config/kitty/
 cp fuse-mounter ~/.local/bin/
 
 chmod +x ~/.local/bin/fuse-mounter
