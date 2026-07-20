@@ -18,6 +18,7 @@ cp -fr nvim ~/.config/
 cp -fr noctalia ~/.config/
 cp -f mimeapps.list ~/.config/
 cp -f config.fish ~/.config/fish/
+cp -f kitty.conf ~/.config/kitty/
 cp fuse-mounter ~/.local/bin/
 
 chmod +x ~/.local/bin/fuse-mounter
