@@ -2,10 +2,10 @@
 tab_size = 2
 [plugin]
 prepend_preloaders = [
-{ url = "*.csv", run = "duckdb", multi = false },  
-  { url = "*.tsv", run = "duckdb", multi = false },  
+  { url = "*.csv", run = "duckdb", multi = false },
+  { url = "*.tsv", run = "duckdb", multi = false },
   { url = "*.parquet", run = "duckdb", multi = false },
-  { url = "*.txt", run = "duckdb", multi = false },  
+  { url = "*.txt", run = "duckdb", multi = false },
   { url = "*.xlsx", run = "duckdb", multi = false },
 
   # Do not preload files in mounted locations:
@@ -15,12 +15,12 @@ prepend_preloaders = [
 
 prepend_previewers = [
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
-  { mime = "application/sqlite3", run  = 'piper -- sqlite3 "$1" ".schema --indent"'},
-  { url = "*.csv", run = "duckdb" },  
-  { url = "*.tsv", run = "duckdb" },  
-  { url = "*.parquet", run = "duckdb" },  
-  { url = "*.txt", run = "duckdb" },  
-  { url = "*.xlsx", run = "duckdb" },  
+  { mime = "application/sqlite3", run = 'piper -- sqlite3 "$1" ".schema --indent"' },
+  { url = "*.csv", run = "duckdb" },
+  { url = "*.tsv", run = "duckdb" },
+  { url = "*.parquet", run = "duckdb" },
+  { url = "*.txt", run = "duckdb" },
+  { url = "*.xlsx", run = "duckdb" },
   { url = "*.db", run = "duckdb" },
   { url = "*.duckdb", run = "duckdb" },
   # Allow to preview folder.
@@ -36,138 +36,240 @@ linemode = "size_and_mtime"
 
 [opener]
 # --- Текстовые редакторы и код ---
-edit = [
-    { run = 'nvim "$@"', block = true, desc = "Neovim" },
-]
+edit = [{ run = 'nvim "$@"', block = true, desc = "Neovim" }]
 
 # --- Документы (PDF, DjVu, EPUB) ---
 # Okular, Zathura или Evince — все они отлично справятся [citation:6]sudo ntfsfix --clear-dirty /dev/sdb2
-docs = [
-    { run = 'zathura "$@"', desc = "Zathura" },
-]
+docs = [{ run = 'zathura "$@"', desc = "Zathura" }]
 
 # --- Медиа (видео, аудио) ---
 # 'orphan = true' запускает плеер в фоне, не блокируя Yazi [citation:4][citation:7]
-media = [
-    { run = 'mpv --force-window "$@"', orphan = true, desc = "MPV" },
-]
+media = [{ run = 'mpv --force-window "$@"', orphan = true, desc = "MPV" }]
 
 # --- Изображения ---
-images = [
-    { run = 'imv "$@"', orphan = true, desc = "imv" },
-]
+images = [{ run = 'imv "$@"', orphan = true, desc = "imv" }]
 
 # --- Архивы (извлечение) ---~/.local/bin/fuse-mounter
 extract = [
-    {run = 'kitty -e fuse-mounter "$1"', desc = "Mount archive"},
-    { run = 'tuiarchiver tui "$@"', block = true,desc = "TUI Archiver" },
-    { run = 'xdg-open "$@"', desc = "System Default" },
-    { run = 'mkdir -p "${1%.*}" && 7z x -y "$1" -o"${1%.*}"', desc = "Распаковать в папку" },
+  { run = 'kitty -e fuse-mounter "$1"', desc = "Mount archive" },
+  { run = 'xdg-open "$@"', desc = "System Default" },
+  { run = 'mkdir -p "${1%.*}" && 7z x -y "$1" -o"${1%.*}"', desc = "Распаковать в папку" },
 ]
 
 # --- Все остальное (открыть программой по умолчанию) ---
 # Универсальная команда на случай, если мы что-то пропустили [citation:4]
-default = [
-    { run = 'xdg-open "$@"', desc = "System Default" },
-]
+default = [{ run = 'xdg-open "$@"', desc = "System Default" }]
 
 [open]
 rules = [
-    { mime = "application/json", use = "edit" },
-    { mime = "application/javascript", use = "edit" },
-    { mime = "application/xml", use = "edit" },
-    { mime = "application/toml", use = "edit" },
-    { mime = "application/yaml", use = "edit" },
-  
-   # --- АРХИВЫ ---
-    # Gzip
-    { mime = "application/gzip", use = [ "extract", "reveal" ] },
-    { mime = "application/x-gzip", use = [ "extract", "reveal" ] },
+  { mime = "application/json", use = "edit" },
+  { mime = "application/javascript", use = "edit" },
+  { mime = "application/xml", use = "edit" },
+  { mime = "application/toml", use = "edit" },
+  { mime = "application/yaml", use = "edit" },
 
-    # Tar
-    { mime = "application/x-tar", use = [ "extract", "reveal" ] },
+  # --- АРХИВЫ ---
+  # Gzip
+  { mime = "application/gzip", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-gzip", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # ZIP
-    { mime = "application/zip", use = [ "extract", "reveal" ] },
-    { mime = "application/x-zip-compressed", use = [ "extract", "reveal" ] },
+  # Tar
+  { mime = "application/x-tar", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # 7-Zip
-    { mime = "application/x-7z-compressed", use = [ "extract", "reveal" ] },
+  # ZIP
+  { mime = "application/zip", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-zip-compressed", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # RAR
-    { mime = "application/rar", use = [ "extract", "reveal" ] },
-    { mime = "application/x-rar", use = [ "extract", "reveal" ] },
-    { mime = "application/x-rar-compressed", use = [ "extract", "reveal" ] },
-    { mime = "application/vnd.rar", use = [ "extract", "reveal" ] },  # официальный MIME-тип для RAR
+  # 7-Zip
+  { mime = "application/x-7z-compressed", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Bzip2
-    { mime = "application/x-bzip2", use = [ "extract", "reveal" ] },
+  # RAR
+  { mime = "application/rar", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-rar", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-rar-compressed", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/vnd.rar", use = [
+    "extract",
+    "reveal",
+  ] }, # официальный MIME-тип для RAR
 
-    # XZ
-    { mime = "application/x-xz", use = [ "extract", "reveal" ] },
+  # Bzip2
+  { mime = "application/x-bzip2", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Zstandard (Zstd)
-    { mime = "application/zstd", use = [ "extract", "reveal" ] },
-    { mime = "application/x-zstd-compressed-tar", use = [ "extract", "reveal" ] },
+  # XZ
+  { mime = "application/x-xz", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # LZMA / LZIP
-    { mime = "application/x-lzma", use = [ "extract", "reveal" ] },
-    { mime = "application/x-lzip", use = [ "extract", "reveal" ] },
+  # Zstandard (Zstd)
+  { mime = "application/zstd", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-zstd-compressed-tar", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # LZ4
-    { mime = "application/x-lz4", use = [ "extract", "reveal" ] },
+  # LZMA / LZIP
+  { mime = "application/x-lzma", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-lzip", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # LZO
-    { mime = "application/x-lzop", use = [ "extract", "reveal" ] },
+  # LZ4
+  { mime = "application/x-lz4", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Brotli
-    { mime = "application/x-brotli", use = [ "extract", "reveal" ] },
+  # LZO
+  { mime = "application/x-lzop", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # CPIO (старый формат для статических библиотек)[citation:6]
-    { mime = "application/x-cpio", use = [ "extract", "reveal" ] },
+  # Brotli
+  { mime = "application/x-brotli", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # ISO образы
-    { mime = "application/x-iso9660-image", use = [ "extract", "reveal" ] },
+  # CPIO (старый формат для статических библиотек)[citation:6]
+  { mime = "application/x-cpio", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Debian пакеты (deb) и RPM
-    { mime = "application/x-debian-package", use = [ "extract", "reveal" ] },
-    { mime = "application/x-rpm", use = [ "extract", "reveal" ] },
+  # ISO образы
+  { mime = "application/x-iso9660-image", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # ACE (WinAce)
-    { mime = "application/x-compressed-ace", use = [ "extract", "reveal" ] },
+  # Debian пакеты (deb) и RPM
+  { mime = "application/x-debian-package", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-rpm", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # ARJ
-    { mime = "application/x-compressed-arj", use = [ "extract", "reveal" ] },
+  # ACE (WinAce)
+  { mime = "application/x-compressed-ace", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # StuffIt (SIT)
-    { mime = "application/x-compressed-sit", use = [ "extract", "reveal" ] },
+  # ARJ
+  { mime = "application/x-compressed-arj", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # CAB (Microsoft)
-    { mime = "application/x-cab", use = [ "extract", "reveal" ] },
-    { mime = "application/vnd.ms-cab-compressed", use = [ "extract", "reveal" ] },
+  # StuffIt (SIT)
+  { mime = "application/x-compressed-sit", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Apple Disk Image (DMG)
-    { mime = "application/x-apple-diskimage", use = [ "extract", "reveal" ] },
+  # CAB (Microsoft)
+  { mime = "application/x-cab", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/vnd.ms-cab-compressed", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # LHA / LZH
-    { mime = "application/x-lha", use = [ "extract", "reveal" ] },
-    { mime = "application/x-lzh", use = [ "extract", "reveal" ] },
+  # Apple Disk Image (DMG)
+  { mime = "application/x-apple-diskimage", use = [
+    "extract",
+    "reveal",
+  ] },
 
-    # Комбинированные Tar + Gzip/Bzip2/XZ (на всякий случай, по расширению)
-    { mime = "application/x-tgz", use = [ "extract", "reveal" ] },
-    { mime = "application/x-bzip-compressed-tar", use = [ "extract", "reveal" ] },
+  # LHA / LZH
+  { mime = "application/x-lha", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-lzh", use = [
+    "extract",
+    "reveal",
+  ] },
+
+  # Комбинированные Tar + Gzip/Bzip2/XZ (на всякий случай, по расширению)
+  { mime = "application/x-tgz", use = [
+    "extract",
+    "reveal",
+  ] },
+  { mime = "application/x-bzip-compressed-tar", use = [
+    "extract",
+    "reveal",
+  ] },
 
   # Книги и Документы
-    { mime = "application/pdf", use = "docs" },
-    { mime = "image/djvu", use = "docs" },
-    { mime = "application/epub+zip", use = "docs" },
-    { url = "*.fb2", use = "docs" },
+  { mime = "application/pdf", use = "docs" },
+  { mime = "image/djvu", use = "docs" },
+  { mime = "application/epub+zip", use = "docs" },
+  { url = "*.fb2", use = "docs" },
 
-    { mime = "text/*", use = [ "edit", "default" ] },
+  { mime = "text/*", use = [
+    "edit",
+    "default",
+  ] },
 
-    { mime = "image/*", use = [ "images", "default" ] },
-    { mime = "video/*", use = [ "media", "default" ] },
-    { mime = "audio/*", use = [ "media", "default" ] },
+  { mime = "image/*", use = [
+    "images",
+    "default",
+  ] },
+  { mime = "video/*", use = [
+    "media",
+    "default",
+  ] },
+  { mime = "audio/*", use = [
+    "media",
+    "default",
+  ] },
   # Остальное
-    { mime = "*", use = [ "default" ] },
+  { mime = "*", use = [
+    "default",
+  ] },
 ]
