@@ -1,7 +1,6 @@
 // ────────────── Startup Applications ──────────────
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Miscellaneous#spawn-sh-at-startup
 
-    spawn-sh-at-startup "noctalia"
-    // spawn-sh-at-startup "qs -c noctalia-shell"
+    spawn-sh-at-startup "while true; do noctalia 2>&1 | logger -t noctalia; sleep 2; done"
     spawn-at-startup "Telegram"
     spawn-at-startup "trueconf"
