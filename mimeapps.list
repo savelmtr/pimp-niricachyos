@@ -18,6 +18,9 @@ image/webp=imv.desktop
 image/tiff=imv.desktop
 image/bmp=imv.desktop
 image/x-icon=imv.desktop
+image/heic=imv.desktop
+image/heic-sequence=imv.desktop
+image/heif=imv.desktop
 
 # Документы Microsoft Office
 application/msword=libreoffice-writer.desktop
