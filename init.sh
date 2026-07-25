@@ -15,6 +15,7 @@ mkdir -p ~/.config ~/.local/bin ~/.config/systemd/user ~/.config/fish
 cp -fr niri ~/.config/
 cp -fr yazi ~/.config/
 cp -fr nvim ~/.config/
+cp -fr fastfetch ~/.config/
 cp -f kitty.conf ~/.config/kitty/
 cp -fr noctalia ~/.config/
 cp -f mimeapps.list ~/.config/
