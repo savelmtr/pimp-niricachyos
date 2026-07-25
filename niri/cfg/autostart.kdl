@@ -3,4 +3,4 @@
 
     spawn-sh-at-startup "while true; do noctalia 2>&1 | logger -t noctalia; sleep 2; done"
     spawn-at-startup "Telegram"
-    spawn-at-startup "trueconf"
+    // spawn-at-startup "trueconf"
