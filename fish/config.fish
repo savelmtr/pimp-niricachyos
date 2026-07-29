@@ -12,6 +12,7 @@ if status is-interactive
     set -g fish_key_bindings fish_vi_key_bindings
     # Commands to run in interactive sessions can go here
     zoxide init fish | source
+    fzf_key_bindings
 end
 
 # ===== Modern replacements for classic utilities =====
