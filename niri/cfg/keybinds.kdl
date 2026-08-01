@@ -11,13 +11,14 @@ binds {
     // ─── Applications ───
     Mod+Return hotkey-overlay-title="Open Terminal: Kitty" { spawn "kitty"; }
     // Mod+CTRL+Return hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "qs -c noctalia-shell ipc call launcher toggle"; }
-Mod+CTRL+Return hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    // Mod+CTRL+Return hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+Space hotkey-overlay-title="Open App Launcher: noctalia launcher" { spawn-sh "noctalia msg panel-toggle launcher"; }
     Mod+B hotkey-overlay-title="Open Browser: firefox" { spawn "firefox"; }
     Mod+N hotkey-overlay-title="Open Neovide" { spawn "neovide"; }
     // Mod+ALT+L hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
-Mod+ALT+L hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "noctalia msg session lock"; }
+    Mod+ALT+L hotkey-overlay-title="Lock Screen: noctalia lock" { spawn-sh "noctalia msg session lock"; }
     // Mod+Shift+Q hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
-Mod+Shift+Q hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh "noctalia msg panel-toggle session"; }
+    Mod+Shift+Q hotkey-overlay-title="Session Menu: noctalia sessionMenu" { spawn-sh "noctalia msg panel-toggle session"; }
 
     // Please choose your own file manager.
     Mod+E hotkey-overlay-title="File Manager: Yazi" { spawn-sh "kitty yazi"; }
@@ -89,8 +90,8 @@ XF86MonBrightnessDown allow-when-locked=true { spawn-sh "noctalia msg brightness
     Mod+Shift+CTRL+UP                   { move-column-to-monitor-up; }
     Mod+Shift+CTRL+Down                 { move-column-to-monitor-down; }
 
-    Mod+Shift+X { consume-or-expel-window-left; }
-    Mod+Shift+C { consume-or-expel-window-right; }
+    Mod+Shift+H { consume-or-expel-window-left; }
+    Mod+Shift+L { consume-or-expel-window-right; }
 
     // ─── Workspace Switching ───
     Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
