@@ -2,7 +2,7 @@ config_version = 2
 
 [bar.default]
 background_opacity = 0.63999998569488525
-center = ["workspaces", "clock", "media"]
+center = ["weather", "workspaces", "clock", "media"]
 contact_shadow = true
 end = [
   "keyboard_layout",
@@ -22,7 +22,7 @@ radius_bottom_left = 0
 radius_bottom_right = 0
 radius_top_left = 0
 radius_top_right = 0
-start = ["temp", "cpu", "ram"]
+start = ["temp", "cpu", "ram", "active_window"]
 
 [calendar]
 enabled = true
@@ -124,9 +124,11 @@ path = "/usr/share/noctalia/assets/noctalia-wallpaper.png"
 [widget.clock]
 format = "{:%Y-%m-%d %H:%M}"
 
+[widget.media]
+enabled = false
+
 [widget.network]
 show_label = false
 
 [widget.workspaces]
 display = "name"
-
