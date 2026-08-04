@@ -27,22 +27,42 @@ start = ["temp", "cpu", "ram", "active_window"]
 [calendar]
 enabled = true
 
-
 [idle]
-behavior_order = ["lock", "screen-off", "lock-and-suspend"]
+behavior_order = [
+  "lock",
+  "выключение экрана при работе от батареи",
+  "Приостановка при работе от батареи",
+  "выключение экрана при работе от cети",
+  "Приостановка при работе от сети",
+]
+pre_action_fade_seconds = 0
 
 [idle.behavior.lock]
 action = "lock"
 enabled = false
 timeout = 180.0
 
-[idle.behavior.lock-and-suspend]
-action = "lock_and_suspend"
+[idle.behavior."Приостановка при работе от батареи"]
+action = "command"
+command = "if cat /sys/class/power_supply/BAT0/status | rg -q \"Discharging\"; then noctalia msg session lock-and-suspend; fi"
 enabled = true
 timeout = 300.0
 
-[idle.behavior.screen-off]
-action = "screen_off"
+[idle.behavior."Приостановка при работе от сети"]
+action = "command"
+command = "if cat /sys/class/power_supply/BAT0/status | rg -q \"Charging|Full\"; then noctalia msg session lock-and-suspend; fi"
+enabled = true
+timeout = 900.0
+
+[idle.behavior."выключение экрана при работе от cети"]
+action = "command"
+command = "if cat /sys/class/power_supply/BAT0/status | rg -q \"Charging|Full\"; then noctalia msg dpms-off; fi"
+enabled = true
+timeout = 600.0
+
+[idle.behavior."выключение экрана при работе от батареи"]
+action = "command"
+command = "if cat /sys/class/power_supply/BAT0/status | rg -q \"Discharging\"; then noctalia msg dpms-off; fi"
 enabled = true
 timeout = 180.0
 
