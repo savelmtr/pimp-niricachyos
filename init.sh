@@ -28,4 +28,12 @@ sudo systemctl enable docker.service
 sudo systemctl start docker.service
 sudo usermod -aG docker $USER
 
+echo "Решаем проблему с ошибкой при suspend"
+sudo mkdir -p /etc/systemd/system/systemd-suspend.service.d
+sudo tee /etc/systemd/system/systemd-suspend.service.d/disable_freeze_user_session.conf >/dev/null <<EOF
+[Service]
+Environment="SYSTEMD_SLEEP_FREEZE_USER_SESSIONS=false"
+EOF
+sudo systemctl daemon-reload
+
 fc-cache -fv
