@@ -27,7 +27,7 @@ cd pimp-niricachyos
 
 #### Если у вас GRUB:
 
-Чтобы добавить Windows в dual-boot в GRUB сначала проверьте, что настройка `GRUB_DISABLE_OS_PROBER=false` в `/etc/default/grub` и запускайте `sudo grub-mkconfig -o /boot/grub/grub.cfg`
+Чтобы добавить Windows в dual-boot в GRUB сначала проверьте, что настройка `GRUB_DISABLE_OS_PROBER=false` в `/etc/default/grub` и запускайте `sudo grub-mkconfig -o /boot/grub/grub.cfg` (шорткат в CachyOS - `grubup`)
 
 ### Шорткаты
 
