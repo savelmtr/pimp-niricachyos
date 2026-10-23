@@ -1,7 +1,7 @@
 #!/bin/bash
 # Самый минимальный вариант
 
-sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli imv kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq glow dust httpie fzf
+sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli swayimg kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq glow dust httpie fzf
 
 yay -Syu --noconfirm nirimod-git trueconf fuse-archive noctalia
 
@@ -15,6 +15,7 @@ mkdir -p ~/.config ~/.local/bin ~/.config/systemd/user ~/.config/fish
 cp -fr niri ~/.config/
 cp -fr yazi ~/.config/
 cp -fr nvim ~/.config/
+cp -fr swayimg ~/.config/
 cp -fr fastfetch ~/.config/
 cp -f kitty.conf ~/.config/kitty/
 cp -fr noctalia ~/.config/

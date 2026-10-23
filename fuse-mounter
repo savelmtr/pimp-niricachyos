@@ -1,78 +1,87 @@
 #!/usr/bin/env bash
 # ~/.local/bin/fuse-mounter
+# Универсальный монтировщик архивов для Yazi.
 
-ARCHIVE="$1"
-MOUNT_POINT="/tmp/yazi_mount_$$"
+set -uo pipefail
+
+ARCHIVE="${1:-}"
+if [[ -z "$ARCHIVE" ]]; then
+  echo "Usage: fuse-mounter <archive>" >&2
+  exit 1
+fi
+if [[ ! -f "$ARCHIVE" ]]; then
+  echo "Error: '$ARCHIVE' not found" >&2
+  exit 1
+fi
+
+# Абсолютный путь обязателен для FUSE
+ARCHIVE="$(readlink -f "$ARCHIVE")"
+MOUNT_POINT="$(mktemp -d /tmp/yazi_mount_XXXXXX)"
 MOUNTED=0
 
-# Функция очистки при выходе
 cleanup() {
-  echo ""
-  echo "Cleaning up..."
+  local ec=$?
+  trap - EXIT INT TERM # защита от повторного входа
+
   if [[ $MOUNTED -eq 1 ]]; then
-    fusermount -u "$MOUNT_POINT" 2>/dev/null
+    fusermount -u "$MOUNT_POINT" 2>/dev/null ||
+      fusermount3 -u "$MOUNT_POINT" 2>/dev/null ||
+      umount "$MOUNT_POINT" 2>/dev/null
   fi
   rmdir "$MOUNT_POINT" 2>/dev/null
-  echo "Unmounted: $MOUNT_POINT"
-  exit 0
+  exit "$ec"
+}
+trap cleanup EXIT INT TERM
+
+# Определяем «тарный» ли это архив по расширению
+is_tar_based() {
+  case "$ARCHIVE" in
+  *.tar | *.tar.gz | *.tgz | *.tar.bz2 | *.tbz | *.tbz2 | *.tar.xz | *.txz | *.tar.zst | *.tzst | *.tar.lz4) return 0 ;;
+  *) return 1 ;;
+  esac
 }
 
-# Перехватываем Ctrl+C и другие сигналы
-trap cleanup SIGINT SIGTERM EXIT
+SIZE=$(stat -c %s "$ARCHIVE" 2>/dev/null || stat -f %z "$ARCHIVE" 2>/dev/null || echo 0)
 
-if [[ -z "$ARCHIVE" ]]; then
-  echo "Usage: fuse-mounter <archive>"
-  exit 1
+# Универсальная попытка: запускаем, ждём реального mountpoint
+try_mount() {
+  local label="$1"
+  shift
+  echo "→ $label: $ARCHIVE"
+  if "$@"; then
+    for _ in $(seq 1 30); do
+      mountpoint -q "$MOUNT_POINT" && return 0
+      sleep 0.1
+    done
+    echo "  (не дождались монтирования после $label)"
+  fi
+  return 1
+}
+
+# 1) tar-архивы → ratarmount (он для этого и создан)
+if is_tar_based && command -v ratarmount >/dev/null; then
+  try_mount "ratarmount" ratarmount "$ARCHIVE" "$MOUNT_POINT" && MOUNTED=1
 fi
 
-if [[ ! -f "$ARCHIVE" ]]; then
-  echo "Error: Archive '$ARCHIVE' not found"
-  exit 1
+# 2) Всё остальное → fuse-archive
+if [[ $MOUNTED -eq 0 ]] && command -v fuse-archive >/dev/null; then
+  OPTS=(-o ro)
+  [[ "$SIZE" -gt 1073741824 ]] && OPTS=(-o ro,nocache)
+  try_mount "fuse-archive" fuse-archive "$ARCHIVE" "$MOUNT_POINT" "${OPTS[@]}" && MOUNTED=1
 fi
 
-# Определяем размер архива (в байтах)
-SIZE=$(stat -c %s "$ARCHIVE" 2>/dev/null || stat -f %z "$ARCHIVE" 2>/dev/null)
-
-mkdir -p "$MOUNT_POINT"
-
-# Для очень больших архивов используем ratarmount (если установлен)
-if [[ $SIZE -gt 10737418240 ]] && command -v ratarmount &>/dev/null; then # > 10 ГБ
-  echo "Very large archive detected ($(numfmt --to=iec $SIZE 2>/dev/null || echo $SIZE)), using ratarmount"
-  echo "Press Ctrl+C to cancel mounting"
-  ratarmount "$ARCHIVE" "$MOUNT_POINT" --recursive 2>/dev/null
-  if [[ $? -eq 0 ]]; then
-    MOUNTED=1
-  fi
-elif command -v fuse-archive &>/dev/null; then
-  # Для больших архивов используем nocache и отключаем кеширование
-  if [[ $SIZE -gt 1073741824 ]]; then
-    echo "Large archive detected ($(numfmt --to=iec $SIZE 2>/dev/null || echo $SIZE)), using nocache"
-    OPTS="-o ro,nocache,entry_timeout=0,attr_timeout=0"
-  else
-    OPTS="-o ro"
-  fi
-  echo "Mounting archive... (Press Ctrl+C to cancel)"
-  fuse-archive "$ARCHIVE" "$MOUNT_POINT" $OPTS 2>/dev/null
-  if [[ $? -eq 0 ]]; then
-    MOUNTED=1
-  fi
-else
-  echo "Error: No mounting tool available (fuse-archive or ratarmount)"
-  rmdir "$MOUNT_POINT" 2>/dev/null
-  exit 1
+# 3) Последняя попытка — ratarmount (умеет и zip, и 7z)
+if [[ $MOUNTED -eq 0 ]] && command -v ratarmount >/dev/null; then
+  try_mount "ratarmount (fallback)" ratarmount "$ARCHIVE" "$MOUNT_POINT" && MOUNTED=1
 fi
 
 if [[ $MOUNTED -eq 0 ]]; then
-  echo "Error: Failed to mount archive"
-  cleanup
+  echo "Error: не удалось смонтировать '$ARCHIVE'" >&2
   exit 1
 fi
 
-echo "Successfully mounted: $ARCHIVE -> $MOUNT_POINT"
-echo "Opening Yazi... (Press Ctrl+C to exit and unmount)"
-
-# Запускаем Yazi в фоне, чтобы можно было перехватить Ctrl+C
+echo
+echo "Mounted: $ARCHIVE"
+echo "     →   $MOUNT_POINT"
+echo "Выход из Yazi — размонтирует архив."
 yazi "$MOUNT_POINT"
-
-# Если Yazi завершился нормально, размонтируем
-cleanup
