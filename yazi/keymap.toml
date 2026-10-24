@@ -1,44 +1,104 @@
 [mgr]
 prepend_keymap = [
-  {on = "<C-y>", run = [ 'shell -- wl-copy < "$@"', "yank" ], desc = "Copy file content to clipboard"},
-  { on = ["g", "o"], run = "plugin duckdb -open", desc = "open with duckdb" },
-  {on   = "e", run  = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane"},
-  {on   = "E", run  = "plugin toggle-pane max-preview", desc = "Maximize or restore the preview pane"},
-  {on="R",run  = "plugin recycle-bin -- menu",desc = "Open the trash menu" },
-  { on = [ "T" ], run = "shell kitty", desc = "Открыть терминал в текущей папке" },
-  { on = [ "g", "G" ], run = "shell --block lazygit", desc = "Запустить lazygit" },
-  { on = [ "c", "z" ], run = "shell '7z a -tzip \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP-архив" },
-  { on = [ "c", "7" ], run = "shell '7z a \"${1%.*}.7z\" \"$@\"'", desc = "Создать 7z-архив" },
-  { on = [ "c", "p" ], run = "shell --block '7z a -tzip -p \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP с паролем" },
+  { on = "<C-y>", run = [
+    'shell -- wl-copy < %s1',
+    "yank",
+  ], desc = "Copy file content to clipboard" },
+  { on = [
+    "g",
+    "o",
+  ], run = "plugin duckdb -open", desc = "open with duckdb" },
+  { on = "e", run = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane" },
+  { on = "E", run = "plugin toggle-pane max-preview", desc = "Maximize or restore the preview pane" },
+  { on = "R", run = "plugin recycle-bin -- menu", desc = "Open the trash menu" },
+  { on = [
+    "T",
+  ], run = "shell kitty", desc = "Открыть терминал в текущей папке" },
+  { on = [
+    "g",
+    "G",
+  ], run = "shell --block lazygit", desc = "Запустить lazygit" },
+  { on = [
+    "c",
+    "z",
+  ], run = "shell '7z a -tzip \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP-архив" },
+  { on = [
+    "c",
+    "7",
+  ], run = "shell '7z a \"${1%.*}.7z\" \"$@\"'", desc = "Создать 7z-архив" },
+  { on = [
+    "c",
+    "p",
+  ], run = "shell --block '7z a -tzip -p \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP с паролем" },
 
   # Mount devices
-  {on  = "M", run = "plugin mount"},
+  { on = "M", run = "plugin mount" },
 
   # GVFS
-    { on = [ "W", "m" ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
-    { on = [ "W", "R" ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
-    { on = [ "W", "u" ], run = "plugin gvfs -- select-then-unmount ", desc = "Select device then unmount" },
-    # Add Scheme/Mount URI:
-    { on = [ "W", "a" ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
-    # Edit a Scheme/Mount URI
-    { on = [ "W", "e" ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
-    # Remove a Scheme/Mount URI
-    { on = [ "W", "r" ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
+  { on = [
+    "W",
+    "m",
+  ], run = "plugin gvfs -- select-then-mount --jump", desc = "Select device to mount and jump to its mount point" },
+  { on = [
+    "W",
+    "R",
+  ], run = "plugin gvfs -- remount-current-cwd-device", desc = "Remount device under cwd" },
+  { on = [
+    "W",
+    "u",
+  ], run = "plugin gvfs -- select-then-unmount ", desc = "Select device then unmount" },
+  # Add Scheme/Mount URI:
+  { on = [
+    "W",
+    "a",
+  ], run = "plugin gvfs -- add-mount", desc = "Add a GVFS mount URI" },
+  # Edit a Scheme/Mount URI
+  { on = [
+    "W",
+    "e",
+  ], run = "plugin gvfs -- edit-mount", desc = "Edit a GVFS mount URI" },
+  # Remove a Scheme/Mount URI
+  { on = [
+    "W",
+    "r",
+  ], run = "plugin gvfs -- remove-mount", desc = "Remove a GVFS mount URI" },
 
-    # Jump
-    { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device --automount", desc = "Automount then select device to jump to its mount point" },
-    { on = [ "`", "`" ], run = "plugin gvfs -- jump-back-prev-cwd", desc = "Jump back to the position before jumped to device" },
+  # Jump
+  { on = [
+    "g",
+    "m",
+  ], run = "plugin gvfs -- jump-to-device --automount", desc = "Automount then select device to jump to its mount point" },
+  { on = [
+    "`",
+    "`",
+  ], run = "plugin gvfs -- jump-back-prev-cwd", desc = "Jump back to the position before jumped to device" },
 
   # Relative motions
- { on = [ "1" ], run = "plugin relative-motions 1", desc = "Move in relative steps" },
-  { on = [ "2" ], run = "plugin relative-motions 2", desc = "Move in relative steps" },
-  { on = [ "3" ], run = "plugin relative-motions 3", desc = "Move in relative steps" },
-  { on = [ "4" ], run = "plugin relative-motions 4", desc = "Move in relative steps" },
-  { on = [ "5" ], run = "plugin relative-motions 5", desc = "Move in relative steps" },
-  { on = [ "6" ], run = "plugin relative-motions 6", desc = "Move in relative steps" },
-  { on = [ "7" ], run = "plugin relative-motions 7", desc = "Move in relative steps" },
-  { on = [ "8" ], run = "plugin relative-motions 8", desc = "Move in relative steps" },
-  { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
+  { on = [
+    "1",
+  ], run = "plugin relative-motions 1", desc = "Move in relative steps" },
+  { on = [
+    "2",
+  ], run = "plugin relative-motions 2", desc = "Move in relative steps" },
+  { on = [
+    "3",
+  ], run = "plugin relative-motions 3", desc = "Move in relative steps" },
+  { on = [
+    "4",
+  ], run = "plugin relative-motions 4", desc = "Move in relative steps" },
+  { on = [
+    "5",
+  ], run = "plugin relative-motions 5", desc = "Move in relative steps" },
+  { on = [
+    "6",
+  ], run = "plugin relative-motions 6", desc = "Move in relative steps" },
+  { on = [
+    "7",
+  ], run = "plugin relative-motions 7", desc = "Move in relative steps" },
+  { on = [
+    "8",
+  ], run = "plugin relative-motions 8", desc = "Move in relative steps" },
+  { on = [
+    "9",
+  ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 ]
-
-
