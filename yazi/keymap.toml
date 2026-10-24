@@ -1,6 +1,6 @@
 [mgr]
-
 prepend_keymap = [
+  {on = "<C-y>", run = [ 'shell -- wl-copy < "$@"', "yank" ], desc = "Copy file content to clipboard"},
   { on = ["g", "o"], run = "plugin duckdb -open", desc = "open with duckdb" },
   {on   = "e", run  = "plugin toggle-pane min-preview", desc = "Show or hide the preview pane"},
   {on   = "E", run  = "plugin toggle-pane max-preview", desc = "Maximize or restore the preview pane"},
@@ -28,6 +28,17 @@ prepend_keymap = [
     # Jump
     { on = [ "g", "m" ], run = "plugin gvfs -- jump-to-device --automount", desc = "Automount then select device to jump to its mount point" },
     { on = [ "`", "`" ], run = "plugin gvfs -- jump-back-prev-cwd", desc = "Jump back to the position before jumped to device" },
+
+  # Relative motions
+ { on = [ "1" ], run = "plugin relative-motions 1", desc = "Move in relative steps" },
+  { on = [ "2" ], run = "plugin relative-motions 2", desc = "Move in relative steps" },
+  { on = [ "3" ], run = "plugin relative-motions 3", desc = "Move in relative steps" },
+  { on = [ "4" ], run = "plugin relative-motions 4", desc = "Move in relative steps" },
+  { on = [ "5" ], run = "plugin relative-motions 5", desc = "Move in relative steps" },
+  { on = [ "6" ], run = "plugin relative-motions 6", desc = "Move in relative steps" },
+  { on = [ "7" ], run = "plugin relative-motions 7", desc = "Move in relative steps" },
+  { on = [ "8" ], run = "plugin relative-motions 8", desc = "Move in relative steps" },
+  { on = [ "9" ], run = "plugin relative-motions 9", desc = "Move in relative steps" },
 ]
 
 
