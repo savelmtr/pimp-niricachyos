@@ -6,7 +6,7 @@ sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-c
 yay -Syu --noconfirm nirimod-git trueconf fuse-archive noctalia
 
 # Шрифты
-sudo pacman -S --noconfirm ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-fira-code ttf-nerd-fonts-symbols ttf-hack ttf-hack-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts
+sudo pacman -S --noconfirm ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-fira-code ttf-nerd-fonts-symbols ttf-hack ttf-hack-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland
 yay -S --noconfirm ttf-meslo-nerd-font-powerlevel10k
 
 # Копирование конфигов
@@ -17,6 +17,7 @@ cp -fr yazi ~/.config/
 cp -fr nvim ~/.config/
 cp -fr swayimg ~/.config/
 cp -fr fastfetch ~/.config/
+cp -fr xdg-desktop-portal ~/.config/
 cp -f kitty.conf ~/.config/kitty/
 cp -fr noctalia ~/.config/
 cp -f mimeapps.list ~/.config/
@@ -25,6 +26,7 @@ cp fuse-mounter ~/.local/bin/
 
 chmod +x ~/.local/bin/fuse-mounter
 
+systemctl --user restart xdg-desktop-portal.service
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
 sudo usermod -aG docker $USER
