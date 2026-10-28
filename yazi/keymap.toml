@@ -4,6 +4,15 @@ prepend_keymap = [
     '''shell --confirm 'for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list' ''',
     "yank",
   ], desc = "Copy files to clipboard" },
+  { on = "<C-p>", run = '''shell -- sh -c '
+  if wl-paste --list-types | grep -q "image/"; then
+    wl-paste --type image > "pasted-image.png"
+  else
+    wl-paste -t text/uri-list | while read -r uri; do
+      [ -n "$uri" ] && cp -r "${uri#file://}" .
+    done
+  fi
+' ''', desc = "Paste files or image from clipboard" },
   { on = [
     "g",
     "o",
