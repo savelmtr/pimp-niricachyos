@@ -1,12 +1,12 @@
 #!/bin/bash
 # Самый минимальный вариант
 
-sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli swayimg kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq glow dust httpie fzf
+sudo pacman -Syu --noconfirm p7zip git lazygit yay docker docker-buildx docker-compose yazi telegram-desktop neovide neovim btop libreoffice libreoffice-fresh-ru zoxide ratarmount ntfsprogs xarchiver exiftool zathura-djvu zathura-pdf-mupdf zathura trash-cli swayimg kitty wl-clipboard cliphist tree-sitter-cli gcc npm wireguard-tools mpv nmap gvfs-mtp gvfs-afc gvfs-gphoto2 gvfs-nfs gvfs-smb gvfs-afc gvfs-dnssd gvfs-goa gvfs-onedrive gvfs-wsdd gvfs glib2 duckdb jq glow dust httpie fzf xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland
 
 yay -Syu --noconfirm nirimod-git trueconf fuse-archive noctalia
 
 # Шрифты
-sudo pacman -S --noconfirm ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-fira-code ttf-nerd-fonts-symbols ttf-hack ttf-hack-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland
+sudo pacman -S --noconfirm ttf-jetbrains-mono ttf-jetbrains-mono-nerd ttf-fira-code ttf-nerd-fonts-symbols ttf-hack ttf-hack-nerd noto-fonts noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts
 yay -S --noconfirm ttf-meslo-nerd-font-powerlevel10k
 
 # Копирование конфигов
