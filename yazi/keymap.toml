@@ -1,9 +1,9 @@
 [mgr]
 prepend_keymap = [
   { on = "<C-y>", run = [
-    'shell -- wl-copy < %s1',
+    '''shell --confirm 'for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list' ''',
     "yank",
-  ], desc = "Copy file content to clipboard" },
+  ], desc = "Copy files to clipboard" },
   { on = [
     "g",
     "o",
@@ -21,15 +21,15 @@ prepend_keymap = [
   { on = [
     "c",
     "z",
-  ], run = "shell '7z a -tzip \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP-архив" },
+  ], run = '''shell -- 7z a -tzip %h.zip %s''', desc = "Создать ZIP-архив" },
   { on = [
     "c",
     "7",
-  ], run = "shell '7z a \"${1%.*}.7z\" \"$@\"'", desc = "Создать 7z-архив" },
+  ], run = '''shell -- 7z a %h.7z %s''', desc = "Создать 7z-архив" },
   { on = [
     "c",
     "p",
-  ], run = "shell --block '7z a -tzip -p \"${1%.*}.zip\" \"$@\"'", desc = "Создать ZIP с паролем" },
+  ], run = '''shell --block -- 7z a -tzip -p %h.zip %s''', desc = "Создать ZIP с паролем" },
 
   # Mount devices
   { on = "M", run = "plugin mount" },
